@@ -56,5 +56,17 @@ namespace Keepr.Services
       }
       throw new Exception("Something went terribly wrong");
     }
+
+    internal object Edit(Keep updatedKeep)
+    {
+      Keep found = Get(updatedKeep.Id);
+      if (found.UserId != updatedKeep.UserId)
+      {
+        throw new Exception("Invalid Request");
+      }
+      found.Name = updatedKeep.Name;
+      found.Description = updatedKeep.Description != null ? updatedKeep.Description : found.Description;
+      return _repo.Edit(found);
+    }
   }
 }

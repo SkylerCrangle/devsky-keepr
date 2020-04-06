@@ -53,5 +53,23 @@ namespace Keepr.Repositories
       int removed = _db.Execute(sql, new { id });
       return removed == 1;
     }
+
+    internal object Edit(Keep updatedKeep)
+    {
+      string sql = @"
+            UPDATE keeps
+            SET
+            name = @Name,
+            description = @Description,
+            img = @Img,
+            isPrivate = @IsPrivate,
+            views = @Views,
+            shares = @Shares,
+            keeps = @Keeps
+            WHERE id = @Id
+            ";
+      _db.Execute(sql, updatedKeep);
+      return updatedKeep;
+    }
   }
 }
