@@ -71,5 +71,17 @@ namespace Keepr.Repositories
       _db.Execute(sql, updatedKeep);
       return updatedKeep;
     }
+
+    internal object GetByVaultId(int VaultId)
+    {
+      string sql = @"
+                SELECT 
+                k.*,
+                kt.id AS VaultKeepId
+                FROM vaultkeeps kt
+                INNER JOIN keeps k ON k.id = kt.keepId
+                WHERE vaultId = @VaultId AND isPrivate = 0";
+      return _db.Query<VaultKeepViewModel>(sql, new { VaultId });
+    }
   }
 }
