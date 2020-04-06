@@ -33,5 +33,25 @@ namespace Keepr.Repositories
 
       return KeepData;
     }
+
+    internal Keep Get(int id)
+    {
+      string sql = "SELECT * FROM keeps WHERE id = @Id";
+      return _db.QueryFirstOrDefault<Keep>(sql, new { Id = id });
+
+    }
+
+    internal IEnumerable<Keep> GetMyKeeps(string userId)
+    {
+      string sql = "SELECT * FROM keeps WHERE userId = @UserId";
+      return _db.Query<Keep>(sql, new { userId });
+    }
+
+    internal bool Delete(int id)
+    {
+      string sql = "DELETE FROM keeps WHERE id = @Id LIMIT 1";
+      int removed = _db.Execute(sql, new { id });
+      return removed == 1;
+    }
   }
 }
