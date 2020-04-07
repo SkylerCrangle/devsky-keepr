@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace Keepr.Controllers
 {
   [ApiController]
+  [Authorize]
   [Route("api/[controller]")]
+
   public class VaultsController : ControllerBase
   {
     private readonly VaultsService _vs;
@@ -22,7 +24,6 @@ namespace Keepr.Controllers
     }
 
     [HttpGet]
-    [Authorize]
     public ActionResult<IEnumerable<Vault>> Get()
     {
       try
@@ -62,7 +63,7 @@ namespace Keepr.Controllers
     }
 
 
-    [HttpGet("{id}/vaults")]
+    [HttpGet("{id}/keeps")]
     public ActionResult<IEnumerable<VaultKeepViewModel>> GetKeepsByVaultId(int id)
     {
       try
@@ -79,7 +80,7 @@ namespace Keepr.Controllers
 
 
     [HttpPost]
-    [Authorize]
+
     public ActionResult<Vault> Post([FromBody] Vault newVault)
     {
       try
@@ -96,7 +97,7 @@ namespace Keepr.Controllers
 
 
     [HttpDelete("{id}")]
-    [Authorize]
+
     public ActionResult<Vault> Delete(int id)
     {
       try

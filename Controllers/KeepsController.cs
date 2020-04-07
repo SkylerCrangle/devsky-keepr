@@ -57,21 +57,23 @@ namespace Keepr.Controllers
       {
         // get the keep
         Keep keep = _ks.Get(id);
-        if (keep.IsPrivate)
+        if (!keep.IsPrivate)
         {
-          //if the user logged in
-          //Check if user has a claim
-          var user = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-          //if logged in user is author
-          if (user != null && user.Value == keep.UserId)
-          {
-            // return keep
-            return Ok(keep);
-          }
-          return Unauthorized("You do not have acces to this keep");
+          return Ok(keep);
         }
-        return Ok(keep);
+
+        //if the user logged in
+        //Check if user has a claim
+        var user = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+        //if logged in user is author
+        if (user != null && user.Value == keep.UserId)
+        {
+          // return keep
+          return Ok(keep);
+        }
+        return Unauthorized("You do not have acces to this keep");
       }
+
       catch (Exception e)
       {
         return BadRequest(e.Message);
