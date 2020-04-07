@@ -51,10 +51,10 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("logout");
-    },
-    components: {
-      Keep
     }
+  },
+  components: {
+    Keep
   }
 };
 </script>
