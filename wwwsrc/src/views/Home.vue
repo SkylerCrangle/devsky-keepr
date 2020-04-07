@@ -4,6 +4,67 @@
       <h1 class="col-12">Welcome to Dev-Sky's Keepr</h1>
     </div>
 
+    <div class="createkeep">
+      <div
+        class="modal fade"
+        id="modalRegisterForm"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header text-center">
+              <h4 class="modal-title w-100 font-weight-bold">What do you want to Keep?</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body mx-3">
+              <div class="md-form mb-5">
+                <i class="fas fa-user prefix grey-text"></i>
+                <input type="text" id="orangeForm-name" class="form-control validate" />
+                <label data-error="wrong" data-success="right" for="orangeForm-name">Title</label>
+              </div>
+
+              <div class="md-form mb-5">
+                <i class="fas fa-user prefix grey-text"></i>
+                <input type="text" id="orangeForm-name" class="form-control validate" />
+                <label data-error="wrong" data-success="right" for="orangeForm-name">Description</label>
+              </div>
+
+              <div class="md-form mb-5">
+                <i class="fas fa-user prefix grey-text"></i>
+                <input type="text" id="orangeForm-name" class="form-control validate" />
+                <label data-error="wrong" data-success="right" for="orangeForm-name">Img Url:</label>
+              </div>
+
+              <div class="md-form mb-5">
+                <i class="fas fa-user prefix grey-text"></i>
+                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
+                <label for="vehicle1">Check to make it Private</label>
+              </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+              <button class="btn btn-deep-orange">Create</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a
+          href
+          class="btn btn-default btn-dark btn-rounded mb-4"
+          data-toggle="modal"
+          data-target="#modalRegisterForm"
+        >Post a new Keep</a>
+      </div>
+      <!--end create keep -->
+    </div>
+    <!-- end -->
+
     <div class="row">
       <keep v-for="(keep, index) in keeps" :key="keep.id" :keepData="keep" />
     </div>
@@ -32,9 +93,12 @@
   </div>-->
 </template>
 
+
+
+
 <script>
 import Keep from "../components/Keep";
-
+// v-model="selectedInventoryItem.title"
 export default {
   name: "home",
   mounted() {

@@ -38,7 +38,7 @@ export default new Vuex.Store({
       api.defaults.headers.authorization = "";
     },
     getKeeps({ commit, dispatch }) {
-      debugger
+      //  debugger
       api.get('keeps').then(res => {
         commit('setKeeps', res.data)
       })
