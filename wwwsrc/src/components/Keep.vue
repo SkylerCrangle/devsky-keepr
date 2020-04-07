@@ -38,7 +38,7 @@
           <button class="btn btn-warning btn-rounded">Share</button>
         </div>
         <div class="col-3">
-          <button class="btn btn-danger btn-rounded">X</button>
+          <button class="btn btn-danger btn-rounded" @click="deleteThisKeep()">X</button>
         </div>
       </div>
       <!-- <h1>test {{keepData.description}} {{keepData.name}}</h1> -->
@@ -64,7 +64,12 @@ export default {
     return {};
   },
   computed: {},
-  methods: {},
+  methods: {
+    deleteThisKeep() {
+      let id = this.keepData.id;
+      this.$store.dispatch("deleteKeepById", id);
+    }
+  },
 
   components: {}
 };

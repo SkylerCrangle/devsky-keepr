@@ -2,96 +2,99 @@
   <div class="home container-fluid">
     <div class="row">
       <h1 class="col-12">Welcome to Dev-Sky's Keepr</h1>
+      <h4 class="col-8">Here you can see all of the public keeps</h4>
     </div>
 
-    <div class="createkeep">
-      <div
-        class="modal fade"
-        id="modalRegisterForm"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="myModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header text-center">
-              <h4 class="modal-title w-100 font-weight-bold">What do you want to Keep?</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+    <div class="createkeep row">
+      <div class="col-12">
+        <div
+          class="modal fade"
+          id="modalRegisterForm"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="myModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">What do you want to Keep?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form @submit.prevent="addKeep">
+                <div class="modal-body mx-3">
+                  <div class="md-form mb-5">
+                    <i class="fas fa-user prefix grey-text"></i>
+                    <input
+                      type="text"
+                      id="orangeForm-name"
+                      class="form-control validate"
+                      placeholder="title"
+                      v-model="newKeep.Name"
+                      required
+                    />
+                    <label data-error="wrong" data-success="right" for="orangeForm-name">Title</label>
+                  </div>
+
+                  <div class="md-form mb-5">
+                    <i class="fas fa-user prefix grey-text"></i>
+                    <input
+                      type="text"
+                      id="orangeForm-name"
+                      class="form-control validate"
+                      placeholder="description"
+                      v-model="newKeep.Description"
+                      required
+                    />
+                    <label data-error="wrong" data-success="right" for="orangeForm-name">Description</label>
+                  </div>
+
+                  <div class="md-form mb-5">
+                    <i class="fas fa-user prefix grey-text"></i>
+                    <input
+                      type="text"
+                      id="orangeForm-name"
+                      class="form-control validate"
+                      placeholder="imgage url"
+                      v-model="newKeep.Img"
+                      required
+                    />
+                    <label data-error="wrong" data-success="right" for="orangeForm-name">Img Url:</label>
+                  </div>
+
+                  <div class="md-form mb-5">
+                    <i class="fas fa-user prefix grey-text"></i>
+                    <input
+                      type="checkbox"
+                      id="vehicle1"
+                      name="vehicle1"
+                      value="Bike"
+                      v-model="newKeep.IsPrivate"
+                    />
+                    <label for="vehicle1">Check to make it Private</label>
+                  </div>
+                </div>
+
+                <div class="modal-footer d-flex justify-content-center">
+                  <button class="btn btn-deep-orange" type="submit">Create</button>
+                </div>
+              </form>
             </div>
-            <form @submit.prevent="addKeep">
-              <div class="modal-body mx-3">
-                <div class="md-form mb-5">
-                  <i class="fas fa-user prefix grey-text"></i>
-                  <input
-                    type="text"
-                    id="orangeForm-name"
-                    class="form-control validate"
-                    placeholder="title"
-                    v-model="newKeep.Name"
-                    required
-                  />
-                  <label data-error="wrong" data-success="right" for="orangeForm-name">Title</label>
-                </div>
-
-                <div class="md-form mb-5">
-                  <i class="fas fa-user prefix grey-text"></i>
-                  <input
-                    type="text"
-                    id="orangeForm-name"
-                    class="form-control validate"
-                    placeholder="description"
-                    v-model="newKeep.Description"
-                    required
-                  />
-                  <label data-error="wrong" data-success="right" for="orangeForm-name">Description</label>
-                </div>
-
-                <div class="md-form mb-5">
-                  <i class="fas fa-user prefix grey-text"></i>
-                  <input
-                    type="text"
-                    id="orangeForm-name"
-                    class="form-control validate"
-                    placeholder="imgage url"
-                    v-model="newKeep.Img"
-                    required
-                  />
-                  <label data-error="wrong" data-success="right" for="orangeForm-name">Img Url:</label>
-                </div>
-
-                <div class="md-form mb-5">
-                  <i class="fas fa-user prefix grey-text"></i>
-                  <input
-                    type="checkbox"
-                    id="vehicle1"
-                    name="vehicle1"
-                    value="Bike"
-                    v-model="newKeep.IsPrivate"
-                  />
-                  <label for="vehicle1">Check to make it Private</label>
-                </div>
-              </div>
-
-              <div class="modal-footer d-flex justify-content-center">
-                <button class="btn btn-deep-orange" type="submit">Create</button>
-              </div>
-            </form>
           </div>
         </div>
-      </div>
 
-      <div class="text-center">
-        <a
-          href
-          class="btn btn-default btn-dark btn-rounded mb-4"
-          data-toggle="modal"
-          data-target="#modalRegisterForm"
-        >Post a new Keep</a>
+        <div v-if="$auth.isAuthenticated" class="text-right">
+          <a
+            href
+            class="btn btn-default btn-dark btn-rounded mb-4"
+            data-toggle="modal"
+            data-target="#modalRegisterForm"
+          >Post a new Keep</a>
+        </div>
+        <!--end create keep -->
       </div>
-      <!--end create keep -->
     </div>
     <!-- end -->
 
@@ -133,7 +136,7 @@ export default {
   name: "home",
   mounted() {
     this.$store.dispatch("getKeeps");
-    this.$store.dispatch("getMyKeeps");
+    // this.$store.dispatch("getMyKeeps");
     //setTimeout(this.$store.dispatch("getMyKeeps", 2000));
   },
   data() {
@@ -152,7 +155,7 @@ export default {
     },
     keeps() {
       return this.$store.state.keeps;
-      return this.$store.state.myKeeps;
+      //return this.$store.state.myKeeps;
     }
   },
   methods: {
