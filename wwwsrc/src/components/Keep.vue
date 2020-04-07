@@ -2,25 +2,31 @@
   <div class="keep col-6">
     <div class="mybg">
       <div class="row justify-content-around">
-        <div class="col-11">img u</div>
+        <div class="col-11 py-3">
+          <img class="img-fluid imgs" :src="keepData.img" />
+        </div>
         <div class="col-11">
           <h5>{{keepData.name}}</h5>
         </div>
         <div class="col-11">{{keepData.description}}</div>
-        <div class="col-3">
-          views:
-          <br />
-          {{keepData.views}}
-        </div>
-        <div class="col-3">
-          shares:
-          <br />
-          {{keepData.shares}}
-        </div>
-        <div class="col-3">
-          keeps:
-          <br />
-          {{keepData.keeps}}
+        <div class="row pt-5 pb-3">
+          <div class="col-3">
+            views:
+            <br />
+            {{keepData.views}}
+          </div>
+          <div class="col-1"></div>
+          <div class="col-3">
+            shares:
+            <br />
+            {{keepData.shares}}
+          </div>
+          <div class="col-1"></div>
+          <div class="col-3">
+            keeps:
+            <br />
+            {{keepData.keeps}}
+          </div>
         </div>
       </div>
 
@@ -68,5 +74,9 @@ export default {
 <style scoped>
 .mybg {
   background-color: rgba(0, 0, 0, 0.2);
+}
+.imgs {
+  max-width: 100%;
+  max-height: 100%;
 }
 </style>
