@@ -21,34 +21,64 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body mx-3">
-              <div class="md-form mb-5">
-                <i class="fas fa-user prefix grey-text"></i>
-                <input type="text" id="orangeForm-name" class="form-control validate" />
-                <label data-error="wrong" data-success="right" for="orangeForm-name">Title</label>
+            <form @submit.prevent="addKeep">
+              <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                  <i class="fas fa-user prefix grey-text"></i>
+                  <input
+                    type="text"
+                    id="orangeForm-name"
+                    class="form-control validate"
+                    placeholder="title"
+                    v-model="newKeep.Name"
+                    required
+                  />
+                  <label data-error="wrong" data-success="right" for="orangeForm-name">Title</label>
+                </div>
+
+                <div class="md-form mb-5">
+                  <i class="fas fa-user prefix grey-text"></i>
+                  <input
+                    type="text"
+                    id="orangeForm-name"
+                    class="form-control validate"
+                    placeholder="description"
+                    v-model="newKeep.Description"
+                    required
+                  />
+                  <label data-error="wrong" data-success="right" for="orangeForm-name">Description</label>
+                </div>
+
+                <div class="md-form mb-5">
+                  <i class="fas fa-user prefix grey-text"></i>
+                  <input
+                    type="text"
+                    id="orangeForm-name"
+                    class="form-control validate"
+                    placeholder="imgage url"
+                    v-model="newKeep.Img"
+                    required
+                  />
+                  <label data-error="wrong" data-success="right" for="orangeForm-name">Img Url:</label>
+                </div>
+
+                <div class="md-form mb-5">
+                  <i class="fas fa-user prefix grey-text"></i>
+                  <input
+                    type="checkbox"
+                    id="vehicle1"
+                    name="vehicle1"
+                    value="Bike"
+                    v-model="newKeep.IsPrivate"
+                  />
+                  <label for="vehicle1">Check to make it Private</label>
+                </div>
               </div>
 
-              <div class="md-form mb-5">
-                <i class="fas fa-user prefix grey-text"></i>
-                <input type="text" id="orangeForm-name" class="form-control validate" />
-                <label data-error="wrong" data-success="right" for="orangeForm-name">Description</label>
+              <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-deep-orange" type="submit">Create</button>
               </div>
-
-              <div class="md-form mb-5">
-                <i class="fas fa-user prefix grey-text"></i>
-                <input type="text" id="orangeForm-name" class="form-control validate" />
-                <label data-error="wrong" data-success="right" for="orangeForm-name">Img Url:</label>
-              </div>
-
-              <div class="md-form mb-5">
-                <i class="fas fa-user prefix grey-text"></i>
-                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-                <label for="vehicle1">Check to make it Private</label>
-              </div>
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-              <button class="btn btn-deep-orange">Create</button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -104,6 +134,16 @@ export default {
   mounted() {
     this.$store.dispatch("getKeeps");
   },
+  data() {
+    return {
+      newKeep: {
+        Name: "",
+        Description: "",
+        Img: "",
+        IsPrivate: ""
+      }
+    };
+  },
   computed: {
     user() {
       return this.$store.state.user;
@@ -115,6 +155,10 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("logout");
+    },
+    addKeep() {
+      let thing = this.newKeep;
+      debugger;
     }
   },
   components: {
