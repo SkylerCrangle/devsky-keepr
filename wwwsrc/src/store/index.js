@@ -18,14 +18,19 @@ let api = Axios.create({
 export default new Vuex.Store({
   state: {
     publicKeeps: [],
-    keeps: []
+    keeps: [],
+    myKeeps: []
   },
 
 
   mutations: {
     setKeeps(state, keeps) {
       state.keeps = keeps
+    },
+    setMyKeeps(state, myKeeps) {
+      state.myKeeps = myKeeps
     }
+
   },
 
 
@@ -42,6 +47,32 @@ export default new Vuex.Store({
       api.get('keeps').then(res => {
         commit('setKeeps', res.data)
       })
-    }
+    },
+
+
+    async getMyKeeps({ commit, dispatch }) {
+      debugger
+      try {
+        api.get('keeps/myKeeps').then(res => {
+          commit('setMyKeeps', res.data)
+        })
+      }
+      catch (error) {
+        console.error(error);
+      }
+    },
+
+    async addKeep({ commit, dispatch }, newKeep) {
+      //debugger
+      try {
+        api.post('keeps', newKeep)
+          .then(serverBoard => {
+            dispatch('getKeeps')
+          })
+      }
+      catch (error) {
+        console.error(error);
+      }
+    },
   }
 });

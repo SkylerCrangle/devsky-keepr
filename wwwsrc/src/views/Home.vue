@@ -133,6 +133,8 @@ export default {
   name: "home",
   mounted() {
     this.$store.dispatch("getKeeps");
+    this.$store.dispatch("getMyKeeps");
+    //setTimeout(this.$store.dispatch("getMyKeeps", 2000));
   },
   data() {
     return {
@@ -140,7 +142,7 @@ export default {
         Name: "",
         Description: "",
         Img: "",
-        IsPrivate: ""
+        IsPrivate: false
       }
     };
   },
@@ -150,6 +152,7 @@ export default {
     },
     keeps() {
       return this.$store.state.keeps;
+      return this.$store.state.myKeeps;
     }
   },
   methods: {
@@ -159,6 +162,7 @@ export default {
     addKeep() {
       let thing = this.newKeep;
       debugger;
+      this.$store.dispatch("addKeep", thing);
     }
   },
   components: {
