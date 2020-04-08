@@ -19,7 +19,8 @@ export default new Vuex.Store({
   state: {
     publicKeeps: [],
     keeps: [],
-    myKeeps: []
+    myKeeps: [],
+    vaults: []
   },
 
 
@@ -29,7 +30,10 @@ export default new Vuex.Store({
     },
     setMyKeeps(state, myKeeps) {
       state.myKeeps = myKeeps
-    }
+    },
+    setVaults(state, vaults) {
+      state.vaults = vaults
+    },
 
   },
 
@@ -88,6 +92,16 @@ export default new Vuex.Store({
       }
     },
 
+
+
+
+
+    getVaults({ commit, dispatch }) {
+      //  debugger
+      api.get('vaults').then(res => {
+        commit('setVaults', res.data)
+      })
+    },
 
 
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="keep col-6">
+  <div class="keep col-12 col-sm-6 col-md-3">
     <div class="mybg">
       <div class="row justify-content-around">
         <div class="col-11 py-3">
@@ -10,19 +10,19 @@
         </div>
         <div class="col-11">{{keepData.description}}</div>
         <div class="row pt-5 pb-3">
-          <div class="col-3">
+          <div class="col-4">
             views:
             <br />
             {{keepData.views}}
           </div>
-          <div class="col-1"></div>
-          <div class="col-3">
+          <!-- <div class="col-1"></div> -->
+          <div class="col-4">
             shares:
             <br />
             {{keepData.shares}}
           </div>
-          <div class="col-1"></div>
-          <div class="col-3">
+          <!-- <div class="col-1"></div> -->
+          <div class="col-4">
             keeps:
             <br />
             {{keepData.keeps}}

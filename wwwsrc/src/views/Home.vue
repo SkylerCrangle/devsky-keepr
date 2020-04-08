@@ -99,6 +99,11 @@
     <!-- end -->
 
     <div class="row">
+      <button
+        v-if="$auth.isAuthenticated"
+        class="col-12 btn btn-dark"
+        @click="getKeeps()"
+      >Reaveal my Keeps too</button>
       <keep v-for="(keep, index) in keeps" :key="keep.id" :keepData="keep" />
     </div>
   </div>
@@ -154,8 +159,19 @@ export default {
       return this.$store.state.user;
     },
     keeps() {
-      return this.$store.state.keeps;
-      //return this.$store.state.myKeeps;
+      let allTheKeeps = [];
+      let arr1 = this.$store.state.keeps;
+      let arr2 = this.$store.state.myKeeps;
+      for (let i = 0; i < arr1.length; i++) {
+        allTheKeeps.push(arr1[i]);
+      }
+      for (let i = 0; i < arr2.length; i++) {
+        allTheKeeps.push(arr2[i]);
+      }
+      return allTheKeeps;
+
+      // return this.$store.state.keeps;
+      // return this.$store.state.myKeeps;
     }
   },
   methods: {
@@ -166,6 +182,9 @@ export default {
       let thing = this.newKeep;
       debugger;
       this.$store.dispatch("addKeep", thing);
+    },
+    getKeeps() {
+      this.$store.dispatch("getMyKeeps");
     }
   },
   components: {
