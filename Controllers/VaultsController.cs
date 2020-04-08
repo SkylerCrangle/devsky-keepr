@@ -54,7 +54,7 @@ namespace Keepr.Controllers
           // return vault
           return Ok(vault);
         }
-        return Ok(vault);
+        throw new Exception("invalid vault access");
       }
       catch (Exception e)
       {

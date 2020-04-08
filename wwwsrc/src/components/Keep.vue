@@ -5,8 +5,11 @@
         <div class="col-11 py-3">
           <img class="img-fluid imgs" :src="keepData.img" />
         </div>
-        <div class="col-11">
+        <div class="col-11" v-if="(keepData.name)">
           <h5>{{keepData.name}}</h5>
+        </div>
+        <div class="col-11" v-else>
+          <h5>No Name</h5>
         </div>
         <div class="col-11">{{keepData.description}}</div>
         <div class="row pt-5 pb-3">
@@ -42,7 +45,7 @@
               aria-expanded="false"
             >Keep</button>
 
-            <div class="dropdown-menu">
+            <div class="dropdown-menu bg-secondary btn text-light">
               <a
                 class="dropdown-item"
                 v-for="(vault, index) in vaults"
@@ -103,9 +106,10 @@ export default {
     addKeepToVault(index) {
       let keepId = this.keepData.id;
       let vaultId = this.vaults[index].id;
-      debugger;
+      let name = this.keepData.name;
+      // debugger;
       // let oldListId = this.taskData.listId;
-      this.$store.dispatch("storeKeepInVault", { keepId, vaultId });
+      this.$store.dispatch("storeKeepInVault", { keepId, vaultId, name });
     },
     getVaults() {
       this.$store.dispatch("getVaults");

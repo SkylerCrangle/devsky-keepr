@@ -90,7 +90,9 @@
 import Vault from "../components/Vault";
 export default {
   name: "vaults",
+
   mounted() {
+    this.getVaults();
     this.$store.dispatch("getVaults");
   },
   data() {
@@ -107,8 +109,18 @@ export default {
     }
   },
   methods: {
-    getVaults() {
-      this.$store.dispatch("getVaults");
+    async getVaults() {
+      try {
+        // let thing = await this.$auth.isAuthenticated;
+        if (await this.$auth.isAuthenticated) {
+          //debugger;
+          this.$store.dispatch("getVaults");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
+      // this.$store.dispatch("getVaults");
     },
     addVault() {
       let thing = this.newVault;

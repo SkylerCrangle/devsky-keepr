@@ -55,7 +55,7 @@ export default new Vuex.Store({
 
 
     async getMyKeeps({ commit, dispatch }) {
-      // debugger
+      //debugger
       try {
         api.get('keeps/myKeeps').then(res => {
           commit('setMyKeeps', res.data)
@@ -129,11 +129,25 @@ export default new Vuex.Store({
       }
     },
 
-    async storeKeepInVault({ commit, dispatch }, { keepId, vaultId }) {
+    async storeKeepInVault({ commit, dispatch }, { keepId, vaultId, name }) {
       try {
-        let res = await api.post("keepvaults", keepId, vaultId)
-        // dispatch("getTasksbyListId", listId)
-        // dispatch("getTasksbyListId", oldListId)
+        let res = await api.post("vaultkeeps", { keepId, vaultId })
+        //find keep in store and increment keeps
+        //debugger
+        let keep = await api.get('keeps/' + keepId)
+        let obj = keep.data
+        let keepKeep = obj.keeps
+        let newNumberOfKeeps = keepKeep + 1
+        console.log(newNumberOfKeeps)
+        let objToPost = {
+          name: name,
+          keeps: newNumberOfKeeps
+
+        }
+        console.log(objToPost)
+        let res2 = await api.put('keeps/' + keepId, objToPost)
+        console.log(res2.data)
+        //debugger
 
       } catch (error) {
         console.error(error);

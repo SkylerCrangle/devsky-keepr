@@ -18,7 +18,11 @@
           <router-link :to="{ name: 'home' }" class="nav-link">Home</router-link>
         </li>
 
-        <li class="nav-item" :class="{ active: $route.name == 'vaults' }">
+        <li
+          class="nav-item"
+          v-if="$auth.isAuthenticated"
+          :class="{ active: $route.name == 'vaults' }"
+        >
           <router-link :to="{ name: 'vaults' }" class="nav-link">Vaults</router-link>
         </li>
 
@@ -39,17 +43,12 @@
 </template>
 
 <script>
-import axios from "axios";
-
-let _api = axios.create({
-  baseURL: "https://localhost:5001",
-  withCredentials: true
-});
 export default {
   name: "Navbar",
   methods: {
     async login() {
       await this.$auth.loginWithPopup();
+      await this.$auth.getUserData();
       this.$store.dispatch("setBearer", this.$auth.bearer);
       console.log("this.$auth.user: ");
       console.log(this.$auth.user);

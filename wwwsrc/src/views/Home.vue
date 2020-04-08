@@ -141,8 +141,9 @@ export default {
   name: "home",
   mounted() {
     this.$store.dispatch("getKeeps");
-    // this.$store.dispatch("getMyKeeps");
-    //setTimeout(this.$store.dispatch("getMyKeeps", 2000));
+    this.getKeeps();
+    //this.$store.dispatch("getMyKeeps");
+    //setTimeout(this.$store.dispatch("getMyKeeps", 4000));
   },
   data() {
     return {
@@ -183,8 +184,19 @@ export default {
       // debugger;
       this.$store.dispatch("addKeep", thing);
     },
-    getKeeps() {
-      this.$store.dispatch("getMyKeeps");
+    async getKeeps() {
+      //debugger;
+      try {
+        // let thing = await this.$auth.isAuthenticated;
+        if (await this.$auth.isAuthenticated) {
+          debugger;
+          this.$store.dispatch("getMyKeeps");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
+      //setTimeout(this.$store.dispatch("getMyKeeps", 4000));
     }
   },
   components: {
