@@ -7,7 +7,7 @@
       </div>
 
       <div class="col-12">
-        <div class="createkeep row">
+        <div class="createvault row">
           <div class="col-12">
             <div
               class="modal fade"
@@ -73,7 +73,7 @@
                 data-target="#modalRegisterForm"
               >Make a new Vault</a>
             </div>
-            <!--end create keep -->
+            <!--end create vault -->
           </div>
         </div>
         <!-- end -->
@@ -111,20 +111,15 @@ export default {
   methods: {
     async getVaults() {
       try {
-        // let thing = await this.$auth.isAuthenticated;
         if (await this.$auth.isAuthenticated) {
-          //debugger;
           this.$store.dispatch("getVaults");
         }
       } catch (error) {
         console.error(error);
       }
-
-      // this.$store.dispatch("getVaults");
     },
     addVault() {
       let thing = this.newVault;
-      // debugger;
       this.$store.dispatch("addVault", thing);
     }
   },
