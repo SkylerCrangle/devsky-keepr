@@ -180,7 +180,7 @@ export default {
     },
     addKeep() {
       let thing = this.newKeep;
-      debugger;
+      // debugger;
       this.$store.dispatch("addKeep", thing);
     },
     getKeeps() {

@@ -26,13 +26,36 @@
             keeps:
             <br />
             {{keepData.keeps}}
+            <button @click="getVaults()">test</button>
           </div>
         </div>
       </div>
 
       <div class="row py-3 justify-content-around">
         <div class="col-3">
-          <button class="btn btn-secondary btn-rounded">Keep</button>
+          <div class="btn-group">
+            <button
+              type="button"
+              class="btn btn-secondary dropdown-toggle"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >Keep</button>
+
+            <div class="dropdown-menu">
+              <a
+                class="dropdown-item"
+                v-for="(vault, index) in vaults"
+                :key="vault.id"
+                @click="addKeepToVault(index)"
+              >
+                <!-- v-if="(vault.id!=keepData.vaultId)" -->
+                <p>{{vault.name}}</p>
+              </a>
+            </div>
+          </div>
+
+          <!-- <button class="btn btn-secondary btn-rounded" @click="addKeepToVault()">Keep</button> -->
         </div>
         <div class="col-3">
           <button class="btn btn-warning btn-rounded">Share</button>
@@ -57,6 +80,7 @@
 
 
 <script>
+import Vault from "../components/Vault";
 export default {
   name: "keep",
   props: ["keepData"],
@@ -66,15 +90,31 @@ export default {
   data() {
     return {};
   },
-  computed: {},
+  computed: {
+    vaults() {
+      return this.$store.state.vaults;
+    }
+  },
   methods: {
     deleteThisKeep() {
       let id = this.keepData.id;
       this.$store.dispatch("deleteKeepById", id);
+    },
+    addKeepToVault(index) {
+      let keepId = this.keepData.id;
+      let vaultId = this.vaults[index].id;
+      debugger;
+      // let oldListId = this.taskData.listId;
+      this.$store.dispatch("storeKeepInVault", { keepId, vaultId });
+    },
+    getVaults() {
+      this.$store.dispatch("getVaults");
     }
   },
 
-  components: {}
+  components: {
+    Vault
+  }
 };
 </script>
 

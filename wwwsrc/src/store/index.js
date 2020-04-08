@@ -103,6 +103,43 @@ export default new Vuex.Store({
       })
     },
 
+    async addVault({ commit, dispatch }, newVault) {
+      //debugger
+      try {
+        api.post('vaults', newVault)
+          .then(serverBoard => {
+            dispatch('getVaults')
+          })
+      }
+      catch (error) {
+        console.error(error);
+      }
+    },
+
+
+    async deleteVaultById({ commit, dispatch }, id) {
+      //debugger
+      try {
+        let res = await api.delete("vaults/" + id)
+        commit('setVaults', res.data)
+        dispatch('getVaults')
+      }
+      catch (error) {
+        console.error(error);
+      }
+    },
+
+    async storeKeepInVault({ commit, dispatch }, { keepId, vaultId }) {
+      try {
+        let res = await api.post("keepvaults", keepId, vaultId)
+        // dispatch("getTasksbyListId", listId)
+        // dispatch("getTasksbyListId", oldListId)
+
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
 
 
   }
