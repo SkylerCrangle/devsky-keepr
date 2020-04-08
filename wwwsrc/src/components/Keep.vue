@@ -1,6 +1,6 @@
 <template>
-  <div class="keep col-12 col-sm-6 col-md-3">
-    <div class="mybg">
+  <div class="keep col-12 col-sm-6 col-md-4 col-lg-3">
+    <div class="mybg" v-bind:class="{ private: keepData.isPrivate}">
       <div class="row justify-content-around">
         <div class="col-11 py-3">
           <img class="img-fluid imgs" :src="keepData.img" />
@@ -37,7 +37,10 @@
         <div class="col-3">
           <button class="btn btn-warning btn-rounded">Share</button>
         </div>
-        <div class="col-3">
+
+        <!-- help, where is my user id vs the creator userid? -->
+
+        <div class="col-3" v-if="(keepData.UserId == keepData.UserId )">
           <button class="btn btn-danger btn-rounded" @click="deleteThisKeep()">X</button>
         </div>
       </div>
@@ -83,5 +86,10 @@ export default {
 .imgs {
   max-width: 100%;
   max-height: 100%;
+}
+.private {
+  border-block-end-style: dotted;
+  border-width: 10px;
+  border-color: seagreen;
 }
 </style>

@@ -55,7 +55,7 @@ export default new Vuex.Store({
 
 
     async getMyKeeps({ commit, dispatch }) {
-      debugger
+      // debugger
       try {
         api.get('keeps/myKeeps').then(res => {
           commit('setMyKeeps', res.data)
