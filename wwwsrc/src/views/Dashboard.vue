@@ -28,7 +28,7 @@
                 <div class="col-12">
                   <div
                     class="modal fade"
-                    id="modalRegisterForm"
+                    id="modalRegisterFormV"
                     tabindex="-1"
                     role="dialog"
                     aria-labelledby="myModalLabel"
@@ -96,7 +96,7 @@
                       href
                       class="btn btn-default btn-dark btn-rounded mb-4"
                       data-toggle="modal"
-                      data-target="#modalRegisterForm"
+                      data-target="#modalRegisterFormV"
                     >Make a new Vault</a>
                   </div>
                   <!--end create vault -->
@@ -106,7 +106,12 @@
             </div>
 
             <div class="col-12">
-              <vault v-for="(vault, index) in vaults" :key="vault.id" :vaultData="vault" />
+              <vault
+                v-for="(vault, index) in vaults"
+                :key="vault.id"
+                :vaultData="vault"
+                :vaultIndex="index"
+              />
             </div>
           </div>
 
@@ -287,7 +292,7 @@ export default {
     addVault() {
       let thing = this.newVault;
       this.$store.dispatch("addVault", thing);
-      $("#modalRegisterForm").modal("hide");
+      $("#modalRegisterFormV").modal("hide");
     },
     async getKeeps() {
       try {

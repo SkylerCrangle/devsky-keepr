@@ -35,6 +35,14 @@ export default new Vuex.Store({
     setVaults(state, vaults) {
       state.vaults = vaults
     },
+    addVault(state, newVault) {
+      state.vaults.push(newVault)
+    },
+    deleteVault(state, index) {
+      debugger
+      state.vaults.splice(index, 1)
+    },
+
     setShow(state, show) {
       state.show = show
       console.log(show, state.show)
@@ -56,7 +64,6 @@ export default new Vuex.Store({
     },
 
     getKeeps({ commit, dispatch }) {
-      //  debugger
       api.get('keeps').then(res => {
         commit('setKeeps', res.data)
       })
@@ -106,18 +113,16 @@ export default new Vuex.Store({
 
 
     getVaults({ commit, dispatch }) {
-      //  debugger
       api.get('vaults').then(res => {
         commit('setVaults', res.data)
       })
     },
 
     async addVault({ commit, dispatch }, newVault) {
-      //debugger
       try {
         api.post('vaults', newVault)
-          .then(serverBoard => {
-            dispatch('getVaults')
+          .then(r => {
+            commit('addVault', r.data)
           })
       }
       catch (error) {
@@ -125,13 +130,10 @@ export default new Vuex.Store({
       }
     },
 
-
-    async deleteVaultById({ commit, dispatch }, id) {
-      //debugger
+    async deleteVaultById({ commit, dispatch }, { id, index }) {
       try {
         let res = await api.delete("vaults/" + id)
-        commit('setVaults', res.data)
-        dispatch('getVaults')
+        commit('deleteVault', index)
       }
       catch (error) {
         console.error(error);
@@ -147,7 +149,7 @@ export default new Vuex.Store({
         let obj = keep.data
         let keepKeep = obj.keeps
         let keeps = keepKeep + 1
-        //below line is a problem, needs to be userId
+        //below line is a problem, needs to be
         let check = obj.isPrivate
         console.log(keeps)
         let objToPost = {

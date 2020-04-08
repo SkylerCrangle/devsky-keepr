@@ -26,7 +26,7 @@
 <script>
 export default {
   name: "vault",
-  props: ["vaultData"],
+  props: ["vaultData", "vaultIndex"],
   mounted() {
     //this.$store.dispatch("")
   },
@@ -37,7 +37,8 @@ export default {
   methods: {
     deleteThisVault() {
       let id = this.vaultData.id;
-      this.$store.dispatch("deleteVaultById", id);
+      let index = this.vaultIndex;
+      this.$store.dispatch("deleteVaultById", { id, index });
     }
   },
 
