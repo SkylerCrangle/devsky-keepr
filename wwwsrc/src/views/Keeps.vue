@@ -2,7 +2,7 @@
   <div class="home container-fluid">
     <div class="row">
       <h1 class="col-12">Welcome to Dev-Sky's Keepr</h1>
-      <h4 class="col-8">Here you can see all of the public keeps</h4>
+      <h4 class="col-8">Here you can see only your keeps</h4>
     </div>
 
     <div class="createkeep row">
@@ -99,11 +99,11 @@
     <!-- end -->
 
     <div class="row">
-      <button
+      <!-- <button
         v-if="$auth.isAuthenticated"
         class="col-12 btn btn-dark"
         @click="removePublicKeeps()"
-      >Remove the public Keeps</button>
+      >Remove the public Keeps</button>-->
       <keep v-for="(keep, index) in keeps" :key="keep.id" :keepData="keep" />
     </div>
   </div>
@@ -159,7 +159,7 @@ export default {
     user() {
       return this.$store.state.user;
     },
-    keeps() {
+    badkeeps() {
       let allTheKeeps = [];
       let arr1 = this.$store.state.keeps;
       let arr2 = this.$store.state.myKeeps;
@@ -167,14 +167,21 @@ export default {
         allTheKeeps.push(arr1[i]);
       }
       for (let i = 0; i < arr2.length; i++) {
-        allTheKeeps.push(arr2[i]);
+        if (!allTheKeeps.contains(arr2[i])) {
+          allTheKeeps.push(arr2[i]);
+        }
+        //check if it's allready in arr1 ...? how
       }
       return allTheKeeps;
 
       // return this.$store.state.keeps;
-      // return this.$store.state.myKeeps;
+      //return this.$store.state.myKeeps;
+    },
+    keeps() {
+      return this.$store.state.myKeeps;
     }
   },
+
   methods: {
     logout() {
       this.$store.dispatch("logout");

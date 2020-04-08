@@ -83,5 +83,10 @@ namespace Keepr.Repositories
                 WHERE vaultId = @VaultId AND isPrivate = 0";
       return _db.Query<VaultKeepViewModel>(sql, new { VaultId });
     }
+
+    internal object EditK(Keep found)
+    {
+      throw new NotImplementedException();
+    }
   }
 }

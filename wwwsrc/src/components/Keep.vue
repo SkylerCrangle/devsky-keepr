@@ -29,12 +29,12 @@
             keeps:
             <br />
             {{keepData.keeps}}
-            <button @click="getVaults()">test</button>
+            <!-- <button @click="getVaults()">test</button> -->
           </div>
         </div>
       </div>
 
-      <div class="row py-3 justify-content-around">
+      <div class="row py-3 justify-content-around" v-if="$auth.isAuthenticated">
         <div class="col-3">
           <div class="btn-group">
             <button
@@ -101,6 +101,7 @@ export default {
   },
   methods: {
     deleteThisKeep() {
+      //debugger;
       let id = this.keepData.id;
       this.$store.dispatch("deleteKeepById", id);
     },

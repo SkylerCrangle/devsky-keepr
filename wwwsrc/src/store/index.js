@@ -146,7 +146,9 @@ export default new Vuex.Store({
 
         }
         console.log(objToPost)
-        let res2 = await api.put('keeps/' + keepId, objToPost)
+        let res2 = await api.put('keeps/incrk/' + keepId, objToPost)
+        //debugger
+        console.log('keeps/incrk/' + keepId)
         console.log(res2.data)
 
         if (check) {

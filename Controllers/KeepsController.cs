@@ -143,6 +143,24 @@ namespace Keepr.Controllers
       }
     }
 
+    [HttpPut("incrk/{id}")]
+    [Authorize]
+    public ActionResult<Keep> EditK(int id, [FromBody] Keep updatedKeep)
+    {
+      try
+      {
+        string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        // NOTE DONT TRUST THE USER TO TELL YOU WHO THEY ARE!!!!
+        updatedKeep.UserId = userId;
+        updatedKeep.Id = id;
+        return Ok(_ks.EditK(updatedKeep));
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
 
 
 

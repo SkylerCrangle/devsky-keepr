@@ -62,17 +62,29 @@ namespace Keepr.Services
       Keep found = Get(updatedKeep.Id);
       if (found.UserId != updatedKeep.UserId)
       {
-        throw new Exception("Invalid Request");
+        throw new Exception("you are not the appropriate user");
       }
-      found.Name = updatedKeep.Name;
-      found.Description = updatedKeep.Description != null ? updatedKeep.Description : found.Description;
-      found.Keeps = updatedKeep.Keeps;
-      return _repo.Edit(found);
+      else
+      {
+        found.Name = updatedKeep.Name;
+        found.Description = updatedKeep.Description != null ? updatedKeep.Description : found.Description;
+        found.Keeps = updatedKeep.Keeps;
+        return _repo.Edit(found);
+      }
+
     }
 
     internal object GetKeepsByVaultId(int id)
     {
       return _repo.GetByVaultId(id);
+    }
+
+    internal object EditK(Keep updatedKeep)
+    {
+      Keep found = Get(updatedKeep.Id);
+      found.Keeps = updatedKeep.Keeps;
+      return _repo.Edit(found);
+
     }
   }
 }
