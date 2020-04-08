@@ -6,7 +6,7 @@
       </div>
       <div class="col-6">
         <!-- <router-link to="/keeps"> -->
-        <button class="btn btn-dark" @click="setShow('keeps')">See all the Keeps</button>
+        <button class="btn btn-dark" @click="setShow('keeps')">See all your Keeps</button>
         <!-- </router-link> -->
       </div>
       <div class="col-6">
@@ -116,8 +116,114 @@
       <!-- end vaults -->
 
       <div class="row" v-if="this.show === 'keeps'">
+        <div class="col-12">
+          <div class="createkeep row">
+            <div class="col-12">
+              <div
+                class="modal fade"
+                id="modalRegisterForm"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="myModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header text-center">
+                      <h4 class="modal-title w-100 font-weight-bold">What do you want to Keep?</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form @submit.prevent="addKeep">
+                      <div class="modal-body mx-3">
+                        <div class="md-form mb-5">
+                          <i class="fas fa-user prefix grey-text"></i>
+                          <input
+                            type="text"
+                            id="orangeForm-name"
+                            class="form-control validate"
+                            placeholder="title"
+                            v-model="newKeep.Name"
+                            required
+                          />
+                          <label data-error="wrong" data-success="right" for="orangeForm-name">Title</label>
+                        </div>
+
+                        <div class="md-form mb-5">
+                          <i class="fas fa-user prefix grey-text"></i>
+                          <input
+                            type="text"
+                            id="orangeForm-name"
+                            class="form-control validate"
+                            placeholder="description"
+                            v-model="newKeep.Description"
+                            required
+                          />
+                          <label
+                            data-error="wrong"
+                            data-success="right"
+                            for="orangeForm-name"
+                          >Description</label>
+                        </div>
+
+                        <div class="md-form mb-5">
+                          <i class="fas fa-user prefix grey-text"></i>
+                          <input
+                            type="text"
+                            id="orangeForm-name"
+                            class="form-control validate"
+                            placeholder="imgage url"
+                            v-model="newKeep.Img"
+                            required
+                          />
+                          <label
+                            data-error="wrong"
+                            data-success="right"
+                            for="orangeForm-name"
+                          >Img Url:</label>
+                        </div>
+
+                        <div class="md-form mb-5">
+                          <i class="fas fa-user prefix grey-text"></i>
+                          <input
+                            type="checkbox"
+                            id="vehicle1"
+                            name="vehicle1"
+                            value="Bike"
+                            v-model="newKeep.IsPrivate"
+                          />
+                          <label for="vehicle1">Check to make it Private</label>
+                        </div>
+                      </div>
+
+                      <div class="modal-footer d-flex justify-content-center">
+                        <button class="btn btn-deep-orange" type="submit">Create</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <div v-if="$auth.isAuthenticated" class="text-right">
+                <a
+                  href
+                  class="btn btn-default btn-dark btn-rounded mb-4"
+                  data-toggle="modal"
+                  data-target="#modalRegisterForm"
+                >Post a new Keep</a>
+              </div>
+              <!--end create keep -->
+            </div>
+          </div>
+        </div>
+        <!-- end -->
+
         <keep v-for="(keep, index) in keeps" :key="keep.id" :keepData="keep" />
+
+        <!-- end all keeps -->
       </div>
+      <!-- end all keeps -->
 
       <div class="row">
         <div class="col-12" v-if="this.show === ''">
@@ -145,6 +251,12 @@ export default {
       newVault: {
         Name: "",
         Description: ""
+      },
+      newKeep: {
+        Name: "",
+        Description: "",
+        Img: "",
+        IsPrivate: false
       }
     };
   },
@@ -185,6 +297,11 @@ export default {
       } catch (error) {
         console.error(error);
       }
+    },
+    addKeep() {
+      let thing = this.newKeep;
+      this.$store.dispatch("addKeep", thing);
+      $("#modalRegisterForm").modal("hide");
     }
   },
   components: {

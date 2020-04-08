@@ -99,36 +99,9 @@
     <!-- end -->
 
     <div class="row">
-      <button
-        v-if="$auth.isAuthenticated"
-        class="col-12 btn btn-dark"
-        @click="getKeeps()"
-      >Reaveal my Keeps too</button>
       <keep v-for="(keep, index) in keeps" :key="keep.id" :keepData="keep" />
     </div>
   </div>
-
-  <!-- <div v-if="$auth.isAuthenticated" class="home containerfluid my-bg">
-    <div class="row justify-content-center">
-      <div class="col-12">
-        <h1 class="text-primary">Welcome to Dev-Sky's Keepr</h1>
-        <h3 class="text-primary" v-if="!$auth.isAuthenticated">Log-in to access fun</h3>
-        <h3 class="text-primary" v-else>You are logged-in!</h3>
-      </div>
-    </div>
-
-    
-  </div>
-
-  <div v-else class="home containerfluid my-bg2">
-    <div class="row justify-content-center">
-      <div class="col-12">
-        <h1 class="text-primary">Welcome to Dev-Sky's Keepr</h1>
-        <h3 class="text-primary" v-if="!$auth.isAuthenticated">Log-in to access fun</h3>
-        <h3 class="text-primary" v-else>You need to log-in!</h3>
-      </div>
-    </div>
-  </div>-->
 </template>
 
 
@@ -136,14 +109,11 @@
 
 <script>
 import Keep from "../components/Keep";
-// v-model="selectedInventoryItem.title"
 export default {
   name: "home",
   mounted() {
     this.$store.dispatch("getKeeps");
     this.getKeeps();
-    //this.$store.dispatch("getMyKeeps");
-    //setTimeout(this.$store.dispatch("getMyKeeps", 4000));
   },
   data() {
     return {
@@ -160,19 +130,7 @@ export default {
       return this.$store.state.user;
     },
     keeps() {
-      let allTheKeeps = [];
-      let arr1 = this.$store.state.keeps;
-      let arr2 = this.$store.state.myKeeps;
-      for (let i = 0; i < arr1.length; i++) {
-        allTheKeeps.push(arr1[i]);
-      }
-      for (let i = 0; i < arr2.length; i++) {
-        allTheKeeps.push(arr2[i]);
-      }
-      return allTheKeeps;
-
-      // return this.$store.state.keeps;
-      // return this.$store.state.myKeeps;
+      return this.$store.state.keeps;
     }
   },
   methods: {
@@ -181,22 +139,17 @@ export default {
     },
     addKeep() {
       let thing = this.newKeep;
-      // debugger;
       this.$store.dispatch("addKeep", thing);
+      $("#modalRegisterForm").modal("hide");
     },
     async getKeeps() {
-      //debugger;
       try {
-        // let thing = await this.$auth.isAuthenticated;
         if (await this.$auth.isAuthenticated) {
-          // debugger;
           this.$store.dispatch("getMyKeeps");
         }
       } catch (error) {
         console.error(error);
       }
-
-      //setTimeout(this.$store.dispatch("getMyKeeps", 4000));
     }
   },
   components: {
