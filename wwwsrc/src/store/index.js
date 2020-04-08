@@ -147,6 +147,7 @@ export default new Vuex.Store({
         let obj = keep.data
         let keepKeep = obj.keeps
         let keeps = keepKeep + 1
+        //below line is a problem, needs to be userId
         let check = obj.isPrivate
         console.log(keeps)
         let objToPost = {

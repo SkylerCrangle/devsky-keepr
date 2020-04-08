@@ -66,7 +66,7 @@
 
         <!-- help, where is my user id vs the creator userid? -->
 
-        <div class="col-3" v-if="(keepData.UserId == keepData.UserId )">
+        <div class="col-3" v-if="(this.$auth.user.sub == this.keepData.userId )">
           <button class="btn btn-danger btn-rounded" @click="deleteThisKeep()">X</button>
         </div>
       </div>
@@ -104,7 +104,9 @@ export default {
   },
   methods: {
     deleteThisKeep() {
-      //debugger;
+      let look = this.$auth.user.sub;
+      let looky = this.keepData.userId;
+      debugger;
       let id = this.keepData.id;
       this.$store.dispatch("deleteKeepById", id);
     },
