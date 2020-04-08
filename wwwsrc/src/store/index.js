@@ -20,7 +20,8 @@ export default new Vuex.Store({
     publicKeeps: [],
     keeps: [],
     myKeeps: [],
-    vaults: []
+    vaults: [],
+    show: ""
   },
 
 
@@ -34,6 +35,10 @@ export default new Vuex.Store({
     setVaults(state, vaults) {
       state.vaults = vaults
     },
+    setShow(state, show) {
+      state.show = show
+      console.log(show, state.show)
+    },
 
   },
 
@@ -46,6 +51,10 @@ export default new Vuex.Store({
     resetBearer() {
       api.defaults.headers.authorization = "";
     },
+    setShow({ commit, dispatch }, show) {
+      this.commit('setShow', show)
+    },
+
     getKeeps({ commit, dispatch }) {
       //  debugger
       api.get('keeps').then(res => {
