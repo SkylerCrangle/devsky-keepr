@@ -137,16 +137,24 @@ export default new Vuex.Store({
         let keep = await api.get('keeps/' + keepId)
         let obj = keep.data
         let keepKeep = obj.keeps
-        let newNumberOfKeeps = keepKeep + 1
-        console.log(newNumberOfKeeps)
+        let keeps = keepKeep + 1
+        let check = obj.isPrivate
+        console.log(keeps)
         let objToPost = {
           name: name,
-          keeps: newNumberOfKeeps
+          keeps: keeps
 
         }
         console.log(objToPost)
         let res2 = await api.put('keeps/' + keepId, objToPost)
         console.log(res2.data)
+
+        if (check) {
+          dispatch('getMyKeeps')
+        }
+        else {
+          dispatch('getKeeps')
+        }
         //debugger
 
       } catch (error) {

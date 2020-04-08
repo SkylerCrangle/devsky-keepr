@@ -102,8 +102,8 @@
       <button
         v-if="$auth.isAuthenticated"
         class="col-12 btn btn-dark"
-        @click="getKeeps()"
-      >Reaveal my Keeps too</button>
+        @click="removePublicKeeps()"
+      >Remove the public Keeps</button>
       <keep v-for="(keep, index) in keeps" :key="keep.id" :keepData="keep" />
     </div>
   </div>
@@ -138,7 +138,7 @@
 import Keep from "../components/Keep";
 // v-model="selectedInventoryItem.title"
 export default {
-  name: "home",
+  name: "keeps",
   mounted() {
     this.$store.dispatch("getKeeps");
     this.getKeeps();
@@ -197,6 +197,13 @@ export default {
       }
 
       //setTimeout(this.$store.dispatch("getMyKeeps", 4000));
+    },
+    removePublicKeeps() {
+      let thing = this.keeps;
+      thing = thing.filter(t => t.isPrivate == false);
+      console.log(thing);
+      // this.keeps = thing;
+      // return this.keeps;
     }
   },
   components: {

@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-12">
         <h1>These are your vaults</h1>
-        <button @click="getVaults()">reveal</button>
+        <!-- <button @click="getVaults()">reveal</button> -->
       </div>
 
       <div class="col-12">

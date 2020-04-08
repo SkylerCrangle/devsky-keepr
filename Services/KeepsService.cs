@@ -66,6 +66,7 @@ namespace Keepr.Services
       }
       found.Name = updatedKeep.Name;
       found.Description = updatedKeep.Description != null ? updatedKeep.Description : found.Description;
+      found.Keeps = updatedKeep.Keeps;
       return _repo.Edit(found);
     }
 

@@ -88,6 +88,7 @@ export default {
   name: "keep",
   props: ["keepData"],
   mounted() {
+    this.getVaults();
     //this.$store.dispatch("")
   },
   data() {
@@ -111,8 +112,19 @@ export default {
       // let oldListId = this.taskData.listId;
       this.$store.dispatch("storeKeepInVault", { keepId, vaultId, name });
     },
-    getVaults() {
-      this.$store.dispatch("getVaults");
+    // getVaults() {
+    //   this.$store.dispatch("getVaults");
+    // },
+    async getVaults() {
+      try {
+        // let thing = await this.$auth.isAuthenticated;
+        if (await this.$auth.isAuthenticated) {
+          //debugger;
+          this.$store.dispatch("getVaults");
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   },
 
