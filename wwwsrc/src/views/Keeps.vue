@@ -192,18 +192,13 @@ export default {
       this.$store.dispatch("addKeep", thing);
     },
     async getKeeps() {
-      //debugger;
       try {
-        // let thing = await this.$auth.isAuthenticated;
         if (await this.$auth.isAuthenticated) {
-          // debugger;
           this.$store.dispatch("getMyKeeps");
         }
       } catch (error) {
         console.error(error);
       }
-
-      //setTimeout(this.$store.dispatch("getMyKeeps", 4000));
     },
     removePublicKeeps() {
       let thing = this.keeps;

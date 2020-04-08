@@ -116,9 +116,7 @@
       <!-- end vaults -->
 
       <div class="row" v-if="this.show === 'keeps'">
-        <div class="col-12">
-          <p>option 2: keeps</p>
-        </div>
+        <keep v-for="(keep, index) in keeps" :key="keep.id" :keepData="keep" />
       </div>
 
       <div class="row">
@@ -134,9 +132,11 @@
 
 <script>
 import Vault from "../components/Vault";
+import Keep from "../components/Keep";
 export default {
   mounted() {
     this.getVaults();
+    this.getKeeps();
     // this.$store.dispatch("getVaults");
     //this.$store.dispatch("setKeeps");
   },
@@ -154,6 +154,9 @@ export default {
     },
     vaults() {
       return this.$store.state.vaults;
+    },
+    keeps() {
+      return this.$store.state.myKeeps;
     }
   },
   methods: {
@@ -173,10 +176,20 @@ export default {
       let thing = this.newVault;
       this.$store.dispatch("addVault", thing);
       $("#modalRegisterForm").modal("hide");
+    },
+    async getKeeps() {
+      try {
+        if (await this.$auth.isAuthenticated) {
+          this.$store.dispatch("getMyKeeps");
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   },
   components: {
-    Vault
+    Vault,
+    Keep
   }
 };
 </script>

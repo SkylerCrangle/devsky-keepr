@@ -97,6 +97,9 @@ export default {
   computed: {
     vaults() {
       return this.$store.state.vaults;
+    },
+    keeps() {
+      return this.$store.state.myKeeps;
     }
   },
   methods: {
