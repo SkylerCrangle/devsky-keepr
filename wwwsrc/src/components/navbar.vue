@@ -58,6 +58,9 @@ export default {
       await this.$auth.loginWithPopup();
       await this.$auth.getUserData();
       this.$store.dispatch("setBearer", this.$auth.bearer);
+      if (this.$auth.isAuthenticated) {
+        this.$store.dispatch("getVaults");
+      }
       console.log("this.$auth.user: ");
       console.log(this.$auth.user);
     },

@@ -109,9 +109,9 @@ export default {
     }
   },
   methods: {
-    async getVaults() {
+    getVaults() {
       try {
-        if (await this.$auth.isAuthenticated) {
+        if (this.$auth.isAuthenticated) {
           this.$store.dispatch("getVaults");
         }
       } catch (error) {
