@@ -45,7 +45,6 @@ export default new Vuex.Store({
     deleteKeepHome(state, index) {
       state.keeps.splice(index, 1)
     },
-
     setVaults(state, vaults) {
       state.vaults = vaults
     },
@@ -55,31 +54,18 @@ export default new Vuex.Store({
     deleteVault(state, index) {
       state.vaults.splice(index, 1)
     },
-
     setShow(state, show) {
       state.show = show
       console.log(show, state.show)
     },
-
-
-    // setTasks(state, tasks) {
-    //   Vue.set(state.tasks, tasks.listId, tasks.data)
-    // },
-    // addTask(state, taskNew) {
-    //   state.tasks[taskNew.listId].push(taskNew)
-    // },
-
     setVaultKeeps(state, { keepArr, vaultId }) {
       Vue.set(state.vaultKeeps, vaultId, keepArr)
     },
     addKeepToVault(state, newKeep) {
-      debugger
       state.vaultKeeps[newKeep.vaultId].push(newKeep)
     },
-    deleteVK(state, { vaultKeepId, vaultId, keepIndex }) {
+    deleteVK(state, { vaultId, keepIndex }) {
       state.vaultKeeps[vaultId].splice([keepIndex], 1)
-      //state.keeps.splice(index, 1)
-      debugger
     }
 
   },
@@ -96,7 +82,6 @@ export default new Vuex.Store({
     setShow({ commit, dispatch }, show) {
       this.commit('setShow', show)
     },
-
     getKeeps({ commit, dispatch }) {
       api.get('keeps').then(res => {
         commit('setKeeps', res.data)
@@ -125,9 +110,6 @@ export default new Vuex.Store({
     },
     async deleteKeepById({ commit, dispatch }, { id, index, from }) {
       try {
-        if (from == 'vault') {
-          debugger
-        }
         let res = await api.delete("keeps/" + id)
         if (from == 'home') {
           commit('deleteKeepHome', index)
@@ -140,8 +122,6 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-
-
     async getVaults({ commit, dispatch }) {
       try {
         api.get('vaults').then(res => {
@@ -175,7 +155,7 @@ export default new Vuex.Store({
     async storeKeepInVault({ commit, dispatch }, { keepId, vaultId, name, from }) {
       try {
         let res = await api.post("vaultkeeps", { keepId, vaultId })
-        //find keep in store and increment keeps
+        //find keep in db and increment keeps for put
         let keep = await api.get('keeps/' + keepId)
         let originalKeeps = keep.data.keeps
         let keeps = originalKeeps + 1
@@ -210,46 +190,12 @@ export default new Vuex.Store({
     async deleteVK({ commit, dispatch }, { vaultKeepId, vaultId, keepIndex }) {
       try {
         let res = await api.delete("vaultkeeps/" + vaultKeepId)
-        commit('deleteVK', { vaultKeepId, vaultId, keepIndex })
+        commit('deleteVK', { vaultId, keepIndex })
       }
       catch (error) {
         console.error(error);
       }
     },
-
-
-    //delete functions below (references)
-
-    async addTask({ commit, dispatch }, taskData) {
-      try {
-        let res = await api.post("tasks", taskData)
-        commit("addTask", res.data)
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    async deleteTaskById({ commit, dispatch }, { id, listId }) {
-      try {
-        let res = await api.delete("tasks/" + id)
-        dispatch("getTasksbyListId", listId)
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    async moveTaskToList({ commit, dispatch }, { id, listId, oldListId }) {
-      try {
-        let res = await api.put("tasks/" + id, { listId })
-        dispatch("getTasksbyListId", listId)
-        dispatch("getTasksbyListId", oldListId)
-
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-
 
   }
 });
