@@ -32,6 +32,14 @@ export default new Vuex.Store({
     setMyKeeps(state, myKeeps) {
       state.myKeeps = myKeeps
     },
+    addKeep(state, newKeep) {
+      state.myKeeps.push(newKeep);
+      if (!newKeep.IsPrivate) {
+        // debugger
+        state.keeps.push(newKeep)
+      }
+    },
+
     setVaults(state, vaults) {
       state.vaults = vaults
     },
@@ -71,7 +79,6 @@ export default new Vuex.Store({
 
 
     async getMyKeeps({ commit, dispatch }) {
-      //debugger
       try {
         api.get('keeps/myKeeps').then(res => {
           commit('setMyKeeps', res.data)
@@ -87,7 +94,7 @@ export default new Vuex.Store({
       try {
         api.post('keeps', newKeep)
           .then(serverBoard => {
-            dispatch('getKeeps')
+            commit('addKeep', newKeep)
           })
       }
       catch (error) {

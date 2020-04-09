@@ -149,10 +149,11 @@ namespace Keepr.Controllers
     {
       try
       {
-        string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         // NOTE DONT TRUST THE USER TO TELL YOU WHO THEY ARE!!!!
-        updatedKeep.UserId = userId;
+        // updatedKeep.UserId = updatedKeep.UserId;
         updatedKeep.Id = id;
+
         return Ok(_ks.EditK(updatedKeep));
       }
       catch (Exception e)

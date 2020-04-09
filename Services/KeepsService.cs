@@ -83,6 +83,16 @@ namespace Keepr.Services
     {
       Keep found = Get(updatedKeep.Id);
       found.Keeps = updatedKeep.Keeps;
+      found.UserId = found.UserId;
+      found.Name = found.Name;
+      found.Description = found.Description;
+      found.Name = found.Name;
+      found.Views = found.Views;
+      found.Img = found.Img;
+      found.Shares = found.Shares;
+
+
+
       return _repo.Edit(found);
 
     }

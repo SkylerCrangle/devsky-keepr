@@ -32,7 +32,7 @@
                       id="orangeForm-name"
                       class="form-control validate"
                       placeholder="title"
-                      v-model="newKeep.Name"
+                      v-model="newKeep.name"
                       required
                     />
                     <label data-error="wrong" data-success="right" for="orangeForm-name">Title</label>
@@ -45,7 +45,7 @@
                       id="orangeForm-name"
                       class="form-control validate"
                       placeholder="description"
-                      v-model="newKeep.Description"
+                      v-model="newKeep.description"
                       required
                     />
                     <label data-error="wrong" data-success="right" for="orangeForm-name">Description</label>
@@ -58,7 +58,7 @@
                       id="orangeForm-name"
                       class="form-control validate"
                       placeholder="imgage url"
-                      v-model="newKeep.Img"
+                      v-model="newKeep.img"
                       required
                     />
                     <label data-error="wrong" data-success="right" for="orangeForm-name">Img Url:</label>
@@ -71,7 +71,7 @@
                       id="vehicle1"
                       name="vehicle1"
                       value="Bike"
-                      v-model="newKeep.IsPrivate"
+                      v-model="newKeep.isPrivate"
                     />
                     <label for="vehicle1">Check to make it Private</label>
                   </div>
@@ -118,10 +118,10 @@ export default {
   data() {
     return {
       newKeep: {
-        Name: "",
-        Description: "",
-        Img: "",
-        IsPrivate: false
+        name: "",
+        description: "",
+        img: "",
+        isPrivate: false
       }
     };
   },
