@@ -113,9 +113,10 @@ export default {
       let keepId = this.keepData.id;
       let vaultId = this.vaults[index].id;
       let name = this.keepData.name;
+      let from = this.deleteKeep;
       // debugger;
       // let oldListId = this.taskData.listId;
-      this.$store.dispatch("storeKeepInVault", { keepId, vaultId, name });
+      this.$store.dispatch("storeKeepInVault", { keepId, vaultId, name, from });
     },
 
     async getVaults() {

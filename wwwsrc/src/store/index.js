@@ -111,8 +111,6 @@ export default new Vuex.Store({
         else if (from == 'dashboard') {
           commit('deleteKeep', index)
         }
-
-
       }
       catch (error) {
         console.error(error);
@@ -120,16 +118,11 @@ export default new Vuex.Store({
     },
 
 
-
-
-
-
     getVaults({ commit, dispatch }) {
       api.get('vaults').then(res => {
         commit('setVaults', res.data)
       })
     },
-
     async addVault({ commit, dispatch }, newVault) {
       try {
         api.post('vaults', newVault)
@@ -141,7 +134,6 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-
     async deleteVaultById({ commit, dispatch }, { id, index }) {
       try {
         let res = await api.delete("vaults/" + id)
@@ -151,38 +143,25 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-
-    async storeKeepInVault({ commit, dispatch }, { keepId, vaultId, name }) {
+    async storeKeepInVault({ commit, dispatch }, { keepId, vaultId, name, from }) {
       try {
         let res = await api.post("vaultkeeps", { keepId, vaultId })
         //find keep in store and increment keeps
-        //debugger
         let keep = await api.get('keeps/' + keepId)
-        let obj = keep.data
-        let keepKeep = obj.keeps
-        let keeps = keepKeep + 1
-        //below line is a problem, needs to be
-        let check = obj.isPrivate
-        console.log(keeps)
+        let originalKeeps = keep.data.keeps
+        let keeps = originalKeeps + 1
         let objToPost = {
           name: name,
           keeps: keeps
-
         }
         console.log(objToPost)
         let res2 = await api.put('keeps/incrk/' + keepId, objToPost)
-        //debugger
-        console.log('keeps/incrk/' + keepId)
-        console.log(res2.data)
-
-        if (check) {
-          dispatch('getMyKeeps')
-        }
-        else {
+        if (from == 'home') {
           dispatch('getKeeps')
         }
-        //debugger
-
+        else if (from == 'dashboard') {
+          dispatch('getMyKeeps')
+        }
       } catch (error) {
         console.error(error);
       }
