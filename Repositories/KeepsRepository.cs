@@ -72,7 +72,7 @@ namespace Keepr.Repositories
       return updatedKeep;
     }
 
-    internal object GetByVaultId(int VaultId)
+    internal IEnumerable<VaultKeepViewModel> GetByVaultId(int VaultId)
     {
       string sql = @"
                 SELECT 

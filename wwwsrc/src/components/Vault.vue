@@ -13,7 +13,7 @@
         <div class="row">
           <keep
             v-for="(keep, index) in keeps"
-            :key="keep.id"
+            :key="keep.vaultKeepId"
             :keepData="keep"
             :keepIndex="index"
             :deleteKeep="'vault'"
@@ -37,15 +37,15 @@
 
 
 <script>
-import Keep from "../components/Keep";
+import Keep from "./Keep";
 
 export default {
   name: "vault",
   props: ["vaultData", "vaultIndex"],
   mounted() {
-    debugger;
+    //debugger;
     //let vaultId = this.vaultData.id;
-    this.getVaultKeeps();
+    // this.getVaultKeeps();
     this.$store.dispatch("getKeepsByVaultId", this.vaultData.id);
   },
   data() {

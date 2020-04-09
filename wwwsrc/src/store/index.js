@@ -62,16 +62,14 @@ export default new Vuex.Store({
     },
 
 
-    setTasks(state, tasks) {
-      Vue.set(state.tasks, tasks.listId, tasks.data)
-    },
-    addTask(state, taskNew) {
-      state.tasks[taskNew.listId].push(taskNew)
-    },
+    // setTasks(state, tasks) {
+    //   Vue.set(state.tasks, tasks.listId, tasks.data)
+    // },
+    // addTask(state, taskNew) {
+    //   state.tasks[taskNew.listId].push(taskNew)
+    // },
 
     setVaultKeeps(state, { keepArr, vaultId }) {
-      // debugger
-      //state.vaultKeeps[taskNew.listId].push(taskNew)
       Vue.set(state.vaultKeeps, vaultId, keepArr)
     },
     addKeepToVault(state, newKeep) {
