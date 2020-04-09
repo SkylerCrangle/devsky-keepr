@@ -52,7 +52,6 @@ export default new Vuex.Store({
       state.vaults.push(newVault)
     },
     deleteVault(state, index) {
-      debugger
       state.vaults.splice(index, 1)
     },
 
