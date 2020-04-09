@@ -122,12 +122,11 @@ export default {
       }
     },
     deleteThisVK() {
-      let keepId = this.keepData.id;
-      // let vaultId = this.vaults[index].id;
-      let name = this.keepData.name;
-      let from = this.deleteKeep;
-      let vd = this.vaultData;
+      let vaultKeepId = this.keepData.vaultKeepId;
+      let vaultId = this.vaultData.id;
+      let keepIndex = this.keepIndex;
       debugger;
+      this.$store.dispatch("deleteVK", { vaultKeepId, vaultId, keepIndex });
     },
     addKeepToVault(index) {
       let keepId = this.keepData.id;

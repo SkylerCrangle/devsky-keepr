@@ -76,6 +76,11 @@ export default new Vuex.Store({
       debugger
       state.vaultKeeps[newKeep.vaultId].push(newKeep)
     },
+    deleteVK(state, { vaultKeepId, vaultId, keepIndex }) {
+      state.vaultKeeps[vaultId].splice([keepIndex], 1)
+      //state.keeps.splice(index, 1)
+      debugger
+    }
 
   },
 
@@ -197,6 +202,15 @@ export default new Vuex.Store({
           let keepArr = res.data
           commit('setVaultKeeps', { keepArr, vaultId })
         })
+      }
+      catch (error) {
+        console.error(error);
+      }
+    },
+    async deleteVK({ commit, dispatch }, { vaultKeepId, vaultId, keepIndex }) {
+      try {
+        let res = await api.delete("vaultkeeps/" + vaultKeepId)
+        commit('deleteVK', { vaultKeepId, vaultId, keepIndex })
       }
       catch (error) {
         console.error(error);
