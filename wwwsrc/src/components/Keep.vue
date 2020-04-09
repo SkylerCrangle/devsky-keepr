@@ -86,7 +86,7 @@
 import Vault from "../components/Vault";
 export default {
   name: "keep",
-  props: ["keepData"],
+  props: ["keepData", "keepIndex", "deleteKeep"],
   mounted() {
     this.getVaults();
     //this.$store.dispatch("")
@@ -104,11 +104,10 @@ export default {
   },
   methods: {
     deleteThisKeep() {
-      let look = this.$auth.user.sub;
-      let looky = this.keepData.userId;
-      debugger;
+      let from = this.deleteKeep;
       let id = this.keepData.id;
-      this.$store.dispatch("deleteKeepById", id);
+      let index = this.keepIndex;
+      this.$store.dispatch("deleteKeepById", { id, index, from });
     },
     addKeepToVault(index) {
       let keepId = this.keepData.id;
@@ -118,14 +117,10 @@ export default {
       // let oldListId = this.taskData.listId;
       this.$store.dispatch("storeKeepInVault", { keepId, vaultId, name });
     },
-    // getVaults() {
-    //   this.$store.dispatch("getVaults");
-    // },
+
     async getVaults() {
       try {
-        // let thing = await this.$auth.isAuthenticated;
         if (await this.$auth.isAuthenticated) {
-          //debugger;
           this.$store.dispatch("getVaults");
         }
       } catch (error) {

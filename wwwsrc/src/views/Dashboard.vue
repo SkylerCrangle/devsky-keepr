@@ -224,7 +224,13 @@
         </div>
         <!-- end -->
 
-        <keep v-for="(keep, index) in keeps" :key="keep.id" :keepData="keep" />
+        <keep
+          v-for="(keep, index) in keeps"
+          :key="keep.id"
+          :keepData="keep"
+          :keepIndex="index"
+          :deleteKeep="'dashboard'"
+        />
 
         <!-- end all keeps -->
       </div>
@@ -305,6 +311,8 @@ export default {
     },
     addKeep() {
       let thing = this.newKeep;
+      let userId = this.$auth.user.sub;
+      this.newKeep.userId = userId;
       this.$store.dispatch("addKeep", thing);
       $("#modalRegisterForm").modal("hide");
     }

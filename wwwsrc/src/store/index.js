@@ -35,9 +35,14 @@ export default new Vuex.Store({
     addKeep(state, newKeep) {
       state.myKeeps.push(newKeep);
       if (!newKeep.IsPrivate) {
-        // debugger
         state.keeps.push(newKeep)
       }
+    },
+    deleteKeep(state, index) {
+      state.myKeeps.splice(index, 1)
+    },
+    deleteKeepHome(state, index) {
+      state.keeps.splice(index, 1)
     },
 
     setVaults(state, vaults) {
@@ -76,8 +81,6 @@ export default new Vuex.Store({
         commit('setKeeps', res.data)
       })
     },
-
-
     async getMyKeeps({ commit, dispatch }) {
       try {
         api.get('keeps/myKeeps').then(res => {
@@ -88,9 +91,7 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-
     async addKeep({ commit, dispatch }, newKeep) {
-      //debugger
       try {
         api.post('keeps', newKeep)
           .then(serverBoard => {
@@ -101,19 +102,23 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-
-
-    async deleteKeepById({ commit, dispatch }, id) {
-      //debugger
+    async deleteKeepById({ commit, dispatch }, { id, index, from }) {
       try {
         let res = await api.delete("keeps/" + id)
-        commit('setMyKeeps', res.data)
-        dispatch('getKeeps')
+        if (from == 'home') {
+          commit('deleteKeepHome', index)
+        }
+        else if (from == 'dashboard') {
+          commit('deleteKeep', index)
+        }
+
+
       }
       catch (error) {
         console.error(error);
       }
     },
+
 
 
 
