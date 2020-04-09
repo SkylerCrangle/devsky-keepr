@@ -8,6 +8,17 @@
       <div class="col-1 p-3">
         <button class="btn btn-danger" @click="deleteThisVault()">X</button>
       </div>
+      <div class="col-12">
+        <div class="row">
+          <keep
+            v-for="(keep, index) in keeps"
+            :key="keep.id"
+            :keepData="keep"
+            :keepIndex="index"
+            :deleteKeep="'vault'"
+          />
+        </div>
+      </div>
 
       <!-- end row -->
     </div>
@@ -24,16 +35,25 @@
 
 
 <script>
+import Keep from "../components/Keep";
+
 export default {
   name: "vault",
   props: ["vaultData", "vaultIndex"],
   mounted() {
-    //this.$store.dispatch("")
+    //debugger;
+    //let vaultId = this.vaultData.id;
+    this.$store.dispatch("getKeepsByVaultId", this.vaultData.id);
   },
   data() {
     return {};
   },
-  computed: {},
+  computed: {
+    keeps() {
+      return this.$store.state.vaultKeeps[this.vaultData.id];
+      //return this.$store.state.comments[this.taskData.id]
+    }
+  },
   methods: {
     deleteThisVault() {
       let id = this.vaultData.id;
@@ -41,8 +61,9 @@ export default {
       this.$store.dispatch("deleteVaultById", { id, index });
     }
   },
-
-  components: {}
+  components: {
+    Keep
+  }
 };
 </script>
 

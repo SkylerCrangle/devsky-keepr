@@ -21,7 +21,8 @@ export default new Vuex.Store({
     keeps: [],
     myKeeps: [],
     vaults: [],
-    show: ""
+    show: "",
+    vaultKeeps: {}
   },
 
 
@@ -58,6 +59,24 @@ export default new Vuex.Store({
     setShow(state, show) {
       state.show = show
       console.log(show, state.show)
+    },
+
+
+    setTasks(state, tasks) {
+      Vue.set(state.tasks, tasks.listId, tasks.data)
+    },
+    addTask(state, taskNew) {
+      state.tasks[taskNew.listId].push(taskNew)
+    },
+
+    setVaultKeeps(state, { keepArr, vaultId }) {
+      // debugger
+      //state.vaultKeeps[taskNew.listId].push(taskNew)
+      Vue.set(state.vaultKeeps, vaultId, keepArr)
+    },
+    addKeepToVault(state, newKeep) {
+      debugger
+      state.vaultKeeps[newKeep.vaultId].push(newKeep)
     },
 
   },
@@ -117,10 +136,15 @@ export default new Vuex.Store({
     },
 
 
-    getVaults({ commit, dispatch }) {
-      api.get('vaults').then(res => {
-        commit('setVaults', res.data)
-      })
+    async getVaults({ commit, dispatch }) {
+      try {
+        api.get('vaults').then(res => {
+          commit('setVaults', res.data)
+        })
+      }
+      catch (error) {
+        console.error(error);
+      }
     },
     async addVault({ commit, dispatch }, newVault) {
       try {
@@ -164,7 +188,51 @@ export default new Vuex.Store({
       } catch (error) {
         console.error(error);
       }
-    }
+    },
+    async getKeepsByVaultId({ commit, dispatch }, vaultId) {
+      try {
+        api.get('vaults/' + vaultId + '/keeps').then(res => {
+          console.log(res.data)
+          let keepArr = res.data
+          commit('setVaultKeeps', { keepArr, vaultId })
+        })
+      }
+      catch (error) {
+        console.error(error);
+      }
+    },
+
+
+    //delete functions below (references)
+
+    async addTask({ commit, dispatch }, taskData) {
+      try {
+        let res = await api.post("tasks", taskData)
+        commit("addTask", res.data)
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async deleteTaskById({ commit, dispatch }, { id, listId }) {
+      try {
+        let res = await api.delete("tasks/" + id)
+        dispatch("getTasksbyListId", listId)
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async moveTaskToList({ commit, dispatch }, { id, listId, oldListId }) {
+      try {
+        let res = await api.put("tasks/" + id, { listId })
+        dispatch("getTasksbyListId", listId)
+        dispatch("getTasksbyListId", oldListId)
+
+      } catch (error) {
+        console.error(error);
+      }
+    },
 
 
 
