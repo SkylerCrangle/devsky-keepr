@@ -122,6 +122,9 @@ export default new Vuex.Store({
     },
     async deleteKeepById({ commit, dispatch }, { id, index, from }) {
       try {
+        if (from == 'vault') {
+          debugger
+        }
         let res = await api.delete("keeps/" + id)
         if (from == 'home') {
           commit('deleteKeepHome', index)

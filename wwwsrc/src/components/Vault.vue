@@ -4,6 +4,7 @@
       <div class="col-10">
         <h1>{{vaultData.name}}</h1>
         <h3>{{vaultData.description}}</h3>
+        <!-- <button class="btn btn-secondary" @click="getVaultKeeps()">Populate Vaults</button> -->
       </div>
       <div class="col-1 p-3">
         <button class="btn btn-danger" @click="deleteThisVault()">X</button>
@@ -16,6 +17,7 @@
             :keepData="keep"
             :keepIndex="index"
             :deleteKeep="'vault'"
+            :vaultData="vaultData"
           />
         </div>
       </div>
@@ -41,8 +43,9 @@ export default {
   name: "vault",
   props: ["vaultData", "vaultIndex"],
   mounted() {
-    //debugger;
+    debugger;
     //let vaultId = this.vaultData.id;
+    this.getVaultKeeps();
     this.$store.dispatch("getKeepsByVaultId", this.vaultData.id);
   },
   data() {
@@ -59,6 +62,15 @@ export default {
       let id = this.vaultData.id;
       let index = this.vaultIndex;
       this.$store.dispatch("deleteVaultById", { id, index });
+    },
+    getVaultKeeps() {
+      try {
+        if (this.$auth.isAuthenticated) {
+          this.$store.dispatch("getKeepsByVaultId", this.vaultData.id);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   },
   components: {

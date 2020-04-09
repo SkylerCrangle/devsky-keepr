@@ -66,7 +66,10 @@
 
         <!-- help, where is my user id vs the creator userid? -->
 
-        <div class="col-3" v-if="(this.$auth.user.sub == this.keepData.userId )">
+        <div
+          class="col-3"
+          v-if="(this.$auth.user.sub == this.keepData.userId | this.deleteKeep=='vault')"
+        >
           <button class="btn btn-danger btn-rounded" @click="deleteThisKeep()">X</button>
         </div>
       </div>
@@ -86,7 +89,7 @@
 import Vault from "../components/Vault";
 export default {
   name: "keep",
-  props: ["keepData", "keepIndex", "deleteKeep"],
+  props: ["keepData", "keepIndex", "deleteKeep", "vaultData"],
   mounted() {
     this.getVaults();
     //this.$store.dispatch("")
@@ -107,7 +110,12 @@ export default {
       let from = this.deleteKeep;
       let id = this.keepData.id;
       let index = this.keepIndex;
-      this.$store.dispatch("deleteKeepById", { id, index, from });
+      debugger;
+      if (this.vaultData != undefined) {
+        debugger;
+      } else {
+        this.$store.dispatch("deleteKeepById", { id, index, from });
+      }
     },
     addKeepToVault(index) {
       let keepId = this.keepData.id;
